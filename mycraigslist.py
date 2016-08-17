@@ -13,7 +13,21 @@ try:
 except ImportError:
     from urllib.parse import urljoin  # PY3
 
-from .sites import get_all_sites
+sites_url = 'http://www.craigslist.org/about/sites'
+
+def get_all_sites():
+    response = requests.get(sites_url)
+    response.raise_for_status()  # Something failed?
+    soup = BeautifulSoup(response.content, 'html.parser')
+    sites = set()
+
+    for box in soup.findAll('div', {'class': 'box'}):
+        for a in box.findAll('a'):
+            # Remove protocol and get subdomain
+            site = a.attrs['href'].rsplit('//', 1)[1].split('.')[0]
+            sites.add(site)
+
+    return sites
 
 ALL_SITES = get_all_sites()  # All the Craiglist sites
 RESULTS_PER_REQUEST = 100  # Craigslist returns 100 results per request
@@ -304,6 +318,7 @@ class CraigslistHousing(CraigslistBase):
     default_category = 'hhh'
 
     extra_filters = {
+        'neighborhood_code': {'url_key': 'nh', 'value': 21},
         'private_room': {'url_key': 'private_room', 'value': 1},
         'private_bath': {'url_key': 'private_bath', 'value': 1},
         'cats_ok': {'url_key': 'pets_cat', 'value': 1},

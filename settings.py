@@ -114,6 +114,27 @@ SLACK_CHANNEL = "#housing"
 # Should be put in private.py, or set as an environment variable.
 SLACK_TOKEN = os.getenv('SLACK_TOKEN', "")
 
+GOOGLEMAPS_KEY = os.getenv('GOOGLEMAPS_KEY', '')
+
+BUSINESSES = [
+    {'lat':37.751186, 'lng':-122.436111},
+    {'lat':37.751428, 'lng':-122.431881},
+    {'lat':37.751692, 'lng':-122.427665}
+]
+
+# Walking time to shuttles
+SHUTTLE_STOPS = [
+    '24th and Church St, San Francisco, CA',
+    'San Jose Avenue & Dolores St, San Francisco, CA'
+]
+
+MAX_WALKING_TIME = 15 * 60 # seconds
+
+MIN_BEDROOMS = None
+
+NEIGHBORHOOD_CODE = None
+
+
 # Any private settings are imported here.
 try:
     from private import *
