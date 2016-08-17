@@ -2,3 +2,5 @@ sqlalchemy
 python-dateutil
 ipython
 slackclient
+googlemaps
+
